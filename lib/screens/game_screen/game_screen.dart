@@ -185,7 +185,7 @@ class _GameScreenState extends State<GameScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               if (_show_level_completed)
-                Expanded(child: Center(child: Text('Du klarade det!')))
+                const Expanded(child: Center(child: Text('Du klarade det!')))
               else if (_board.isNotEmpty)
                 // Loaded => show game board
                 Expanded(
@@ -219,7 +219,7 @@ class _GameScreenState extends State<GameScreen> {
           ),
         ),
       ),
-      floatingActionButton: _isGameCompleted
+      floatingActionButton: _show_level_completed
           ? FloatingActionButton(
               backgroundColor: Colors.blue,
               tooltip: 'Nästa nivå',
@@ -227,7 +227,7 @@ class _GameScreenState extends State<GameScreen> {
                   borderRadius: BorderRadius.circular(20)),
               child: const Icon(Icons.skip_next),
               onPressed: () {
-                _newGame(_level + (_isGameCompleted ? 1 : 0));
+                _newGame(_level + 1);
               },
             )
           : null,
