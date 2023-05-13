@@ -19,7 +19,9 @@ class GameScreen extends StatefulWidget {
 
 class _GameScreenState extends State<GameScreen> {
   int _level = 1;
-  bool _show_level_completed = false;
+  /// Controls if we should show to the user that the game is completed.
+  /// This is set a bit delayed after that [_isGameCompleted] becomes true.
+  bool _showLevelCompleted = false;
   List<CardState> _board = [];
 
   @override
@@ -33,7 +35,7 @@ class _GameScreenState extends State<GameScreen> {
     // Clear the board so we can show a loading state.
     setState(() {
       _board.clear();
-      _show_level_completed = false;
+      _showLevelCompleted = false;
     });
     // Announce to screen reader that a loading process has started.
     SemanticsService.announce('Laddar', TextDirection.ltr);
@@ -109,7 +111,7 @@ class _GameScreenState extends State<GameScreen> {
         await Future.delayed(const Duration(milliseconds: (400)));
         if (!mounted) return;
         setState(() {
-          _show_level_completed = true;
+          _showLevelCompleted = true;
         });
       }
     }
@@ -135,6 +137,7 @@ class _GameScreenState extends State<GameScreen> {
   int get _nCompleted => _board.where((card) => card.completed).length;
 
   /// Has all pairs in the game been completed?
+  /// See also [_showLevelCompleted]
   bool get _isGameCompleted =>
       _board.isNotEmpty && _nCompleted == _board.length;
 
@@ -184,7 +187,7 @@ class _GameScreenState extends State<GameScreen> {
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              if (_show_level_completed)
+              if (_showLevelCompleted)
                 const Expanded(child: Center(child: Text('Du klarade det!')))
               else if (_board.isNotEmpty)
                 // Loaded => show game board
@@ -219,7 +222,7 @@ class _GameScreenState extends State<GameScreen> {
           ),
         ),
       ),
-      floatingActionButton: _show_level_completed
+      floatingActionButton: _showLevelCompleted
           ? FloatingActionButton(
               backgroundColor: Colors.blue,
               tooltip: 'Nästa nivå',
