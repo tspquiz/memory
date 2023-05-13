@@ -19,6 +19,7 @@ class GameScreen extends StatefulWidget {
 
 class _GameScreenState extends State<GameScreen> {
   int _level = 1;
+  bool _show_level_completed = false;
   List<CardState> _board = [];
 
   @override
@@ -32,6 +33,7 @@ class _GameScreenState extends State<GameScreen> {
     // Clear the board so we can show a loading state.
     setState(() {
       _board.clear();
+      _show_level_completed = false;
     });
     // Announce to screen reader that a loading process has started.
     SemanticsService.announce('Laddar', TextDirection.ltr);
@@ -96,23 +98,19 @@ class _GameScreenState extends State<GameScreen> {
         flipCard.completed = true;
       });
       // After a short delay, hide the completed pair
-      if (!_isGameCompleted) {
-        Future.delayed(const Duration(milliseconds: 600)).then((_) {
-          if (!mounted) return;
-          setState(() {
-            otherCard.hidden = true;
-            flipCard.hidden = true;
-          });
+      await Future.delayed(const Duration(milliseconds: (600)));
+      if (!mounted) return;
+      setState(() {
+        otherCard.hidden = true;
+        flipCard.hidden = true;
+      });
+      if (_isGameCompleted) {
+        // Then if game is now completed, toggle showing completed message.
+        await Future.delayed(const Duration(milliseconds: (400)));
+        if (!mounted) return;
+        setState(() {
+          _show_level_completed = true;
         });
-      } else {
-        // Game completed => show all cards again
-        for (var card in _board) {
-          if (card.hidden) {
-            setState(() => card.hidden = false);
-            await Future.delayed(const Duration(milliseconds: 50));
-            if (!mounted) return;
-          }
-        }
       }
     }
 
@@ -186,28 +184,31 @@ class _GameScreenState extends State<GameScreen> {
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              _board.isNotEmpty
-                  // Loaded => show game board
-                  ? Expanded(
-                      child: Board(
-                        data: _board,
-                        onReveal: onReveal,
-                      ),
-                    )
-                  // Loading state:
-                  : Expanded(
-                      child: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const CircularProgressIndicator(),
-                            const SizedBox(height: 20),
-                            Text('Väljer ut tecken...',
-                                style: Theme.of(context).textTheme.titleSmall),
-                          ],
-                        ),
-                      ),
+              if (_show_level_completed)
+                Expanded(child: Center(child: Text('Du klarade det!')))
+              else if (_board.isNotEmpty)
+                // Loaded => show game board
+                Expanded(
+                  child: Board(
+                    data: _board,
+                    onReveal: onReveal,
+                  ),
+                )
+              else
+                // Loading state:
+                Expanded(
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const CircularProgressIndicator(),
+                        const SizedBox(height: 20),
+                        Text('Väljer ut tecken...',
+                            style: Theme.of(context).textTheme.titleSmall),
+                      ],
                     ),
+                  ),
+                ),
               if (_showFooter)
                 Footer(
                   level: _level,
