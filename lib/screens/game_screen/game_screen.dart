@@ -59,7 +59,7 @@ class _GameScreenState extends State<GameScreen> {
   }
 
   /// Callback from when a card is tapped to reveal the front
-  void onReveal(int flipIndex) {
+  Future<void> onReveal(int flipIndex) async {
     if (!mounted) return;
     final flippedCount =
         _board.where((card) => card.showFrontSide && !card.completed).length;
@@ -85,30 +85,36 @@ class _GameScreenState extends State<GameScreen> {
       throw Exception('Could not find pair');
     }
 
+    // Flip card
     setState(() {
-      // Found pair?
-      if (otherCard.showFrontSide) {
+      flipCard.showFrontSide = true;
+    });
+    // Found pair?
+    if (otherCard.showFrontSide) {
+      setState(() {
         otherCard.completed = true;
         flipCard.completed = true;
-        // After a short delay, hide the completed pair
-        if (!_isGameCompleted) {
-          Future.delayed(const Duration(seconds: 1)).then((_) {
-            if (!mounted) return;
-            setState(() {
-              otherCard.hidden = true;
-              flipCard.hidden = true;
-            });
+      });
+      // After a short delay, hide the completed pair
+      if (!_isGameCompleted) {
+        Future.delayed(const Duration(milliseconds: 600)).then((_) {
+          if (!mounted) return;
+          setState(() {
+            otherCard.hidden = true;
+            flipCard.hidden = true;
           });
-        } else {
-          // Game completed => show all cards again
-          for (var card in _board) {
-            card.hidden = false;
-            card.showFrontSide = true;
+        });
+      } else {
+        // Game completed => show all cards again
+        for (var card in _board) {
+          if (card.hidden) {
+            setState(() => card.hidden = false);
+            await Future.delayed(const Duration(milliseconds: 50));
+            if (!mounted) return;
           }
         }
       }
-      flipCard.showFrontSide = true;
-    });
+    }
 
     // For screen readers, announce when a pair was found.
     // Tip: on iOS you can enable closed captions for VoiceOver
