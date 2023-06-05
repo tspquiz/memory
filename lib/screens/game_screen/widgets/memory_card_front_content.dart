@@ -29,7 +29,7 @@ class MemoryCardFrontContent extends StatelessWidget {
           child: Text(
             sign.word,
             style: const TextStyle(
-              fontSize: 8,
+              fontSize: 10,
               fontWeight: FontWeight.normal,
               color: Colors.black,
             ),
