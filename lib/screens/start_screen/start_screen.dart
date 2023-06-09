@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:memory/screens/start_screen/widgets/adaptive_link.dart';
 import 'package:memory/utils/gradients.dart';
 import 'package:url_launcher/link.dart';
 
@@ -86,7 +87,7 @@ class AttributionLink extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Link(
+      child: AdaptiveLink(
         builder: (context, followLink) => TextButton(
           style: const ButtonStyle(
             visualDensity: VisualDensity.compact,
