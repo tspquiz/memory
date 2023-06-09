@@ -43,6 +43,38 @@ class StartScreen extends StatelessWidget {
           ),
         ),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
+      floatingActionButton: Container(
+        padding: const EdgeInsets.only(top: 15),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            AdaptiveLink(
+              uri: Uri.parse('https://github.com/tspquiz/memory/'),
+              builder: (context, openLink) => FloatingActionButton(
+                heroTag: "source code",
+                mini: true,
+                backgroundColor: Colors.grey.shade600,
+                tooltip: 'Källkod',
+                onPressed: openLink,
+                child: const Icon(Icons.code),
+              ),
+            ),
+            const SizedBox(width: 5),
+            AdaptiveLink(
+              uri: Uri.parse('https://tspquiz.se/memory/privacy-policy/'),
+              builder: (context, openLink) => FloatingActionButton(
+                heroTag: "privacy policy",
+                mini: true,
+                backgroundColor: Colors.grey.shade600,
+                tooltip: 'Privacy policy',
+                onPressed: openLink,
+                child: const Icon(Icons.privacy_tip),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
