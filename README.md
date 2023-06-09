@@ -4,6 +4,8 @@ A simple memory game built in Flutter using signs and words from [Svenskt tecken
 
 Try yourself at [tspquiz.se/memory/](https://tspquiz.se/memory/).
 
+![Screenshot of memory game](./screenshot.png)
+
 ## Build
 
 ### Web
