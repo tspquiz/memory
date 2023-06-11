@@ -2,13 +2,17 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 import 'package:go_router/go_router.dart';
-import 'package:memory/api/sign_api.dart';
 import 'package:memory/models/card_state.dart';
+import 'package:memory/api/sign_api_pre_fetch.dart';
 import 'package:memory/screens/game_screen/widgets/board.dart';
 import 'package:memory/screens/game_screen/widgets/footer.dart';
 import 'package:memory/screens/game_screen/widgets/view_setting_buttons.dart';
 import 'package:memory/utils/gradients.dart';
 import 'package:memory/utils/question_dialog.dart';
+import 'package:provider/provider.dart';
+
+const firstLevelNPairs = 3;
+const firstLevel = 1;
 
 class GameScreen extends StatefulWidget {
   const GameScreen({super.key});
@@ -18,7 +22,7 @@ class GameScreen extends StatefulWidget {
 }
 
 class _GameScreenState extends State<GameScreen> {
-  int _level = 1;
+  int _level = firstLevel;
   /// Controls if we should show to the user that the game is completed.
   /// This is set a bit delayed after that [_isGameCompleted] becomes true.
   bool _showLevelCompleted = false;
@@ -31,7 +35,7 @@ class _GameScreenState extends State<GameScreen> {
   }
 
   Future<void> _newGame(int level) async {
-    final nPairs = level + 2;
+    final nPairs = firstLevelNPairs + level - firstLevel;
     // Clear the board so we can show a loading state.
     setState(() {
       _board.clear();
@@ -41,7 +45,9 @@ class _GameScreenState extends State<GameScreen> {
     SemanticsService.announce('Laddar', TextDirection.ltr);
 
     // Grab some random signs from the API
-    final signs = await getRandomSigns(nPairs);
+    final api = Provider.of<SignApiPreFetch>(context, listen: false);
+    final signs = await api.getRandomSigns(nPairs);
+    api.preFetch(nPairs + 1);
     if (!mounted) return;
 
     // Add two cards for each sign to a new board array
@@ -157,11 +163,12 @@ class _GameScreenState extends State<GameScreen> {
           onPressed: () async {
             final navigator = Navigator.of(context);
             if (_isGameCompleted || await _askAbortGame()) {
+              if (!mounted) return;
+              final api = Provider.of<SignApiPreFetch>(context, listen: false);
+              api.preFetch(firstLevelNPairs);
               try {
-                if (!mounted) return;
                 navigator.pop();
               } catch (e) {
-                if (!mounted) return;
                 context.go('/');
               }
             }
