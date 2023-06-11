@@ -2,14 +2,28 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
+import 'package:memory/models/app_version.dart';
 import 'package:memory/models/sign.dart';
 
 class Api {
+  final AppVersion appVersion;
+  Api(this.appVersion);
+
   /// Get a given number of random signs from lexicon.
   Future<List<Sign>> getRandomSigns(int count) async {
-    final url =
-        'https://tspquiz.se/api/?action=random&count=$count&excludeUncommon=1';
-    final response = await http.get(Uri.parse(url));
+    final uri = Uri(
+      scheme: 'https',
+      host: 'tspquiz.se',
+      path: '/api/',
+      queryParameters: {
+        'action': 'random',
+        'count': '$count',
+        'excludeUncommon': '1',
+        'appVersion': 'memory ${await appVersion.version()}',
+      },
+    );
+    print(uri.toString());
+    final response = await http.get(uri);
     if (response.statusCode != 200) {
       throw HttpException('Error ${response.statusCode}');
     }
