@@ -1,9 +1,11 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:go_router/go_router.dart';
 import 'package:memory/models/card_state.dart';
 import 'package:memory/api/sign_api_pre_fetch.dart';
+import 'package:memory/models/sign.dart';
 import 'package:memory/screens/game_screen/widgets/board.dart';
 import 'package:memory/screens/game_screen/widgets/footer.dart';
 import 'package:memory/screens/game_screen/widgets/view_setting_buttons.dart';
@@ -41,13 +43,17 @@ class _GameScreenState extends State<GameScreen> {
       _board.clear();
       _showLevelCompleted = false;
     });
+    _clearVideoCache();
     // Announce to screen reader that a loading process has started.
     SemanticsService.announce('Laddar', TextDirection.ltr);
 
     // Grab some random signs from the API
     final api = Provider.of<SignApiPreFetch>(context, listen: false);
     final signs = await api.getRandomSigns(nPairs);
-    api.preFetch(nPairs + 1);
+    _preloadLevelVideos(signs).then((_) {
+      // preload sign api for next level after pre-loading videos of current level
+      api.preFetch(nPairs + 1);
+    });
     if (!mounted) return;
 
     // Add two cards for each sign to a new board array
@@ -66,6 +72,22 @@ class _GameScreenState extends State<GameScreen> {
     // Announce to screen readers that the level has loaded
     SemanticsService.announce(
         'Ny nivå har startat med $nPairs par', TextDirection.ltr);
+  }
+
+  _clearVideoCache() {
+    final cache = Provider.of<CacheManager?>(context, listen: false);
+    if (cache != null) {
+      cache.emptyCache();
+    }
+  }
+
+  Future<void> _preloadLevelVideos(List<Sign> signs) async {
+    final cache = Provider.of<CacheManager?>(context, listen: false);
+    if (cache != null) {
+      await Future.wait(
+        signs.map((s) => cache.getSingleFile(s.videoUrl)),
+      );
+    }
   }
 
   /// Callback from when a card is tapped to reveal the front

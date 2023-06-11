@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:memory/api/sign_api_pre_fetch.dart';
 import 'package:memory/models/app_version.dart';
 import 'package:memory/models/view_settings.dart';
@@ -17,6 +18,7 @@ void main() {
       ChangeNotifierProvider(create: (_) => ViewSettings(showVideo: true)),
       Provider.value(value: appVersion),
       Provider.value(value: api),
+      Provider<CacheManager?>(create: (_) => kIsWeb ? null : DefaultCacheManager()),
     ],
     child: const MyApp()));
 }
