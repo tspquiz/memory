@@ -4,8 +4,6 @@ import 'package:memory/models/sign.dart';
 class SignApiPreFetch extends Api {
   Map<int, Future<List<Sign>>> fetches = {};
 
-  SignApiPreFetch(super.appVersion);
-
   /// Start loading random signs of given count
   void preFetch(int count) {
     if (!fetches.containsKey(count)) {
