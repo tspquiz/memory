@@ -11,5 +11,5 @@ Try yourself at [tspquiz.se/memory/](https://tspquiz.se/memory/).
 ### Web
 
 ```
-flutter build web --web-renderer canvaskit --base-href '/memory/'
+flutter build web --web-renderer canvaskit --base-href '/memory/app/'
 ```
