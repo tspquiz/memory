@@ -7,7 +7,7 @@
     "theme_color": "#7593a1",
     "description": "A new Flutter project.",
     "orientation": "portrait-primary",
-    "prefer_related_applications": false,
+    "prefer_related_applications": true,
     "icons": [
         {
             "src": "icons/Icon-192.png",
@@ -31,5 +31,13 @@
             "type": "image/png",
             "purpose": "maskable"
         }
+    ],
+    "related_applications": [
+        {
+            "platform": "play",
+            "url": "https://play.google.com/store/apps/details?id=se.tspquiz.memory",
+            "id": "se.tspquiz.memory"
+        }
     ]
+
 }
