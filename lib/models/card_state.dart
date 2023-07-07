@@ -1,6 +1,6 @@
 import 'package:memory/models/sign.dart';
 
-// Holds the state of a memory card
+/// Holds the state of a memory card
 class CardState {
   final Sign sign;
   bool showFrontSide;
