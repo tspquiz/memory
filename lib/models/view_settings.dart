@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class ViewSettings extends ChangeNotifier {
   bool _showVideo;
 
-  ViewSettings({required showVideo}): _showVideo = showVideo;
+  ViewSettings({required bool showVideo}): _showVideo = showVideo;
 
   set showVideo(bool value) {
     _showVideo = value;

@@ -1,11 +1,8 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:memory/screens/start_screen/widgets/adaptive_link.dart';
 import 'package:memory/utils/gradients.dart';
-import 'package:url_launcher/link.dart';
 
 class StartScreen extends StatelessWidget {
   const StartScreen({super.key});
@@ -54,7 +51,6 @@ class StartScreen extends StatelessWidget {
               builder: (context, openLink) => FloatingActionButton(
                 heroTag: "source code",
                 mini: true,
-                backgroundColor: Colors.grey.shade600,
                 tooltip: 'Källkod',
                 onPressed: openLink,
                 child: const Icon(Icons.code),
@@ -66,7 +62,6 @@ class StartScreen extends StatelessWidget {
               builder: (context, openLink) => FloatingActionButton(
                 heroTag: "privacy policy",
                 mini: true,
-                backgroundColor: Colors.grey.shade600,
                 tooltip: 'Privacy policy',
                 onPressed: openLink,
                 child: const Icon(Icons.privacy_tip),
@@ -81,8 +76,8 @@ class StartScreen extends StatelessWidget {
   Widget _buildStartGameButton(BuildContext context, Color color) {
     return ElevatedButton.icon(
       style: ButtonStyle(
-        backgroundColor: MaterialStatePropertyAll(color),
-        shape: MaterialStatePropertyAll(
+        backgroundColor: WidgetStatePropertyAll(color),
+        shape: WidgetStatePropertyAll(
             ContinuousRectangleBorder(borderRadius: BorderRadius.circular(20))),
       ),
       onPressed: () {
@@ -123,10 +118,10 @@ class AttributionLink extends StatelessWidget {
         builder: (context, followLink) => TextButton(
           style: const ButtonStyle(
             visualDensity: VisualDensity.compact,
-            textStyle: MaterialStatePropertyAll<TextStyle>(TextStyle(
+            textStyle: WidgetStatePropertyAll<TextStyle>(TextStyle(
               fontSize: 10,
             )),
-            foregroundColor: MaterialStatePropertyAll<Color>(Colors.black),
+            foregroundColor: WidgetStatePropertyAll<Color>(Colors.black),
           ),
           child: Text(text),
           onPressed: () => followLink!(),

@@ -5,6 +5,7 @@ import 'package:memory/api/sign_api_pre_fetch.dart';
 import 'package:memory/models/view_settings.dart';
 import 'package:memory/router/router.dart';
 import 'package:memory/screens/game_screen/game_screen.dart';
+import 'package:memory/theme/app_theme.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -28,9 +29,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'TSP Memory',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: appTheme,
       routerConfig: router,
     );
   }

@@ -32,11 +32,11 @@ class MemoryCardSide extends StatelessWidget {
         onPressed: onTap,
         clipBehavior: Clip.antiAlias,
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color>(backgroundColor),
-          padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+          backgroundColor: WidgetStateProperty.all<Color>(backgroundColor),
+          padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
               const EdgeInsets.all(0)),
-          elevation: MaterialStateProperty.all<double?>(0),
-          shape: MaterialStateProperty.all<OutlinedBorder>(
+          elevation: WidgetStateProperty.all<double?>(0),
+          shape: WidgetStateProperty.all<OutlinedBorder>(
             const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(15)),
             ),
