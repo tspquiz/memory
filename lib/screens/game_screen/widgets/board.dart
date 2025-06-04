@@ -42,7 +42,7 @@ class Board extends StatelessWidget {
           ...data
               .mapIndexed((int index, CardState cardState) =>
                   _buildMemoryCard(context, index, cardState))
-              .toList(),
+              ,
         ],
       );
     });

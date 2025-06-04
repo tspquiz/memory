@@ -74,7 +74,7 @@ class _GameScreenState extends State<GameScreen> {
         'Ny nivå har startat med $nPairs par', TextDirection.ltr);
   }
 
-  _clearVideoCache() {
+  void _clearVideoCache() {
     final cache = Provider.of<CacheManager?>(context, listen: false);
     if (cache != null) {
       cache.emptyCache();
