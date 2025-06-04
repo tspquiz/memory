@@ -51,7 +51,7 @@ class _CardVideoPlayerState extends State<CardVideoPlayer> {
       if (!mounted) return;
       _controller = VideoPlayerController.file(videoFile);
     } else {
-      _controller = VideoPlayerController.network(widget.url);
+      _controller = VideoPlayerController.networkUrl(Uri.parse((widget.url)));
     }
     _controller!.setVolume(0.0);
     _controller!.setLooping(false);

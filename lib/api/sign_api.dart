@@ -17,7 +17,6 @@ class Api {
         'excludeUncommon': '1',
       },
     );
-    print(uri.toString());
     final response = await http.get(uri);
     if (response.statusCode != 200) {
       throw HttpException('Error ${response.statusCode}');

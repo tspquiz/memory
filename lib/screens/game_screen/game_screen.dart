@@ -185,7 +185,7 @@ class _GameScreenState extends State<GameScreen> {
           onPressed: () async {
             final navigator = Navigator.of(context);
             if (_isGameCompleted || await _askAbortGame()) {
-              if (!mounted) return;
+              if (!context.mounted) return;
               final api = Provider.of<SignApiPreFetch>(context, listen: false);
               api.preFetch(firstLevelNPairs);
               try {

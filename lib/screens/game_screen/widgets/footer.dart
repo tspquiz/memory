@@ -19,7 +19,7 @@ class Footer extends StatelessWidget {
         color: Colors.lightBlue.shade200,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.07),
+            color: Colors.black.withValues(alpha: 0.07),
             spreadRadius: 5,
             blurRadius: 10,
             offset: Offset.zero,
