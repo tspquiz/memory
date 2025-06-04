@@ -17,7 +17,7 @@ extension Alert on BuildContext {
           TextButton(
             child: Text(okButtonCaption),
             onPressed: () => Navigator.of(context).pop(),
-          )
+          ),
         ],
       ),
     );

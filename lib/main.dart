@@ -12,13 +12,18 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   final api = SignApiPreFetch();
   api.preFetch(firstLevelNPairs);
-  runApp(MultiProvider(
-    providers: [
-      ChangeNotifierProvider(create: (_) => ViewSettings(showVideo: true)),
-      Provider.value(value: api),
-      Provider<CacheManager?>(create: (_) => kIsWeb ? null : DefaultCacheManager()),
-    ],
-    child: const MyApp()));
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => ViewSettings(showVideo: true)),
+        Provider.value(value: api),
+        Provider<CacheManager?>(
+          create: (_) => kIsWeb ? null : DefaultCacheManager(),
+        ),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

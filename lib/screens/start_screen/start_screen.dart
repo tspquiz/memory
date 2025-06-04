@@ -30,7 +30,10 @@ class StartScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 8),
-              Text('TSP Memory', style: Theme.of(context).textTheme.headlineSmall),
+              Text(
+                'TSP Memory',
+                style: Theme.of(context).textTheme.headlineSmall,
+              ),
               const SizedBox(height: 30),
               _buildStartGameButton(context, Colors.blue.shade700),
               const Spacer(),
@@ -78,7 +81,8 @@ class StartScreen extends StatelessWidget {
       style: ButtonStyle(
         backgroundColor: WidgetStatePropertyAll(color),
         shape: WidgetStatePropertyAll(
-            ContinuousRectangleBorder(borderRadius: BorderRadius.circular(20))),
+          ContinuousRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        ),
       ),
       onPressed: () {
         context.go('/game');
@@ -118,9 +122,11 @@ class AttributionLink extends StatelessWidget {
         builder: (context, followLink) => TextButton(
           style: const ButtonStyle(
             visualDensity: VisualDensity.compact,
-            textStyle: WidgetStatePropertyAll<TextStyle>(TextStyle(
-              fontSize: 10,
-            )),
+            textStyle: WidgetStatePropertyAll<TextStyle>(
+              TextStyle(
+                fontSize: 10,
+              ),
+            ),
             foregroundColor: WidgetStatePropertyAll<Color>(Colors.black),
           ),
           child: Text(text),

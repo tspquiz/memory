@@ -34,7 +34,8 @@ class MemoryCardSide extends StatelessWidget {
         style: ButtonStyle(
           backgroundColor: WidgetStateProperty.all<Color>(backgroundColor),
           padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
-              const EdgeInsets.all(0)),
+            const EdgeInsets.all(0),
+          ),
           elevation: WidgetStateProperty.all<double?>(0),
           shape: WidgetStateProperty.all<OutlinedBorder>(
             const RoundedRectangleBorder(

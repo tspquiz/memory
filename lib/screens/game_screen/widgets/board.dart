@@ -17,35 +17,43 @@ class Board extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (context, constraints) {
-      final nColumns = max(2, sqrt(data.length).ceil());
-      final nRows = (data.length / nColumns).ceil();
-      final cellSize = min(
-        min(constraints.maxWidth / nColumns,
-            MemoryCardSide.size + (nColumns + 1) * 10),
-        min(constraints.maxHeight / nRows, MemoryCardSide.size + (nRows + 1) * 10),
-      );
-      final leftRightPadding =
-          (constraints.maxWidth - (cellSize * nColumns)) / 2;
-      final topBottomPadding = (constraints.maxHeight - (cellSize * nRows)) / 2;
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final nColumns = max(2, sqrt(data.length).ceil());
+        final nRows = (data.length / nColumns).ceil();
+        final cellSize = min(
+          min(
+            constraints.maxWidth / nColumns,
+            MemoryCardSide.size + (nColumns + 1) * 10,
+          ),
+          min(
+            constraints.maxHeight / nRows,
+            MemoryCardSide.size + (nRows + 1) * 10,
+          ),
+        );
+        final leftRightPadding =
+            (constraints.maxWidth - (cellSize * nColumns)) / 2;
+        final topBottomPadding =
+            (constraints.maxHeight - (cellSize * nRows)) / 2;
 
-      return GridView.count(
-        crossAxisCount: nColumns,
-        addAutomaticKeepAlives: true,
-        padding: EdgeInsets.only(
-          left: leftRightPadding,
-          right: leftRightPadding,
-          top: topBottomPadding,
-          bottom: topBottomPadding,
-        ),
-        children: [
-          ...data
-              .mapIndexed((int index, CardState cardState) =>
-                  _buildMemoryCard(context, index, cardState))
-              ,
-        ],
-      );
-    });
+        return GridView.count(
+          crossAxisCount: nColumns,
+          addAutomaticKeepAlives: true,
+          padding: EdgeInsets.only(
+            left: leftRightPadding,
+            right: leftRightPadding,
+            top: topBottomPadding,
+            bottom: topBottomPadding,
+          ),
+          children: [
+            ...data.mapIndexed(
+              (int index, CardState cardState) =>
+                  _buildMemoryCard(context, index, cardState),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   Widget _buildMemoryCard(
@@ -63,7 +71,9 @@ class Board extends StatelessWidget {
           duration: const Duration(milliseconds: 400),
           curve: Curves.easeIn,
           child: AnimatedScale(
-            scale: cardState.hidden ? 0.0 : (cardState.completed && !allCompleted ? 0.9 : 1.0),
+            scale: cardState.hidden
+                ? 0.0
+                : (cardState.completed && !allCompleted ? 0.9 : 1.0),
             curve: Curves.easeIn,
             duration: const Duration(milliseconds: 400),
             child: Semantics(

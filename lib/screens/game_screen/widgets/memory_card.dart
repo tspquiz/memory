@@ -7,8 +7,10 @@ import 'package:flutter/material.dart';
 class MemoryCard extends StatefulWidget {
   /// Should the frontside be shown? If false, the backside is shown.
   final bool showFrontSide;
+
   /// Front side of the card
   final Widget front;
+
   /// Back side of the card
   final Widget back;
   const MemoryCard({
@@ -63,8 +65,9 @@ class _MemoryCardState extends State<MemoryCard> {
         final isUnder = (ValueKey(_showFrontSide) != widget?.key);
         var tilt = ((animation.value - 0.5).abs() - 0.5) * 0.003;
         tilt *= isUnder ? -1.0 : 1.0;
-        final value =
-            isUnder ? min(rotateAnim.value, pi / 2) : rotateAnim.value;
+        final value = isUnder
+            ? min(rotateAnim.value, pi / 2)
+            : rotateAnim.value;
         return Transform(
           transform: _flipXAxis
               ? (Matrix4.rotationY(value)..setEntry(3, 0, tilt))

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:memory/models/sign.dart';
 import 'package:memory/models/view_settings.dart';
@@ -46,8 +45,7 @@ class MemoryCardFrontContent extends StatelessWidget {
         url: sign.videoUrl,
         onLoadError: () async {
           // If a video fails to load, change memory to text mode.
-          final settings =
-              Provider.of<ViewSettings>(context, listen: false);
+          final settings = Provider.of<ViewSettings>(context, listen: false);
           if (settings.showVideo) {
             await context.showAlert(
               title: const Text('Lyckades inte läsa in video'),

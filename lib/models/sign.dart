@@ -1,8 +1,12 @@
-
 class Sign {
-  final String id; /// Lexicon id
-  final String word; /// The swedish word
-  final String videoUrl; /// URL to video
+  /// Lexicon id
+  final String id;
+
+  /// The swedish word
+  final String word;
+
+  /// URL to video
+  final String videoUrl;
 
   Sign({required this.id, required this.word, required this.videoUrl});
 }

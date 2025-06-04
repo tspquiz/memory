@@ -1,4 +1,3 @@
-
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -8,7 +7,11 @@ class AnimatedMemoryCard extends StatefulWidget {
   final Widget front;
   final Widget back;
 
-  const AnimatedMemoryCard({required this.front, required this.back, super.key});
+  const AnimatedMemoryCard({
+    required this.front,
+    required this.back,
+    super.key,
+  });
 
   @override
   State<AnimatedMemoryCard> createState() => _AnimatedMemoryCardState();
@@ -34,7 +37,7 @@ class _AnimatedMemoryCardState extends State<AnimatedMemoryCard> {
   void flip(Timer invoker) {
     setState(() {
       _showFrontSide = !_showFrontSide;
-    }); 
+    });
   }
 
   @override

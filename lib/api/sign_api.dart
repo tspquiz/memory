@@ -25,11 +25,13 @@ class Api {
     List<Sign> result = [];
     final list = json.decode(response.body);
     for (var item in list) {
-      result.add(Sign(
-        id: item['id'],
-        word: item['word'],
-        videoUrl: _getLexiconFullUrl(item['movie']),
-      ));
+      result.add(
+        Sign(
+          id: item['id'],
+          word: item['word'],
+          videoUrl: _getLexiconFullUrl(item['movie']),
+        ),
+      );
     }
 
     return result;

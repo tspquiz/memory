@@ -73,20 +73,25 @@ class _CardVideoPlayerState extends State<CardVideoPlayer> {
   Widget build(BuildContext context) {
     if (_loaded) {
       // The LayoutBuilder is used to obtain the constraints.
-      return LayoutBuilder(builder: (context, constraints) {
-        return SizedBox( // Set outer size of fitted box to fill available space
-          height: constraints.maxHeight,
-          width: constraints.maxWidth,
-          child: FittedBox( // Cover-fit the video in the outer SizedBox frame.
-            fit: BoxFit.cover,
-            child: SizedBox( // Make video respect its aspect ratio.
-              height: constraints.maxHeight,
-              width: constraints.maxHeight * _controller!.value.aspectRatio,
-              child: VideoPlayer(_controller!),
+      return LayoutBuilder(
+        builder: (context, constraints) {
+          return SizedBox(
+            // Set outer size of fitted box to fill available space
+            height: constraints.maxHeight,
+            width: constraints.maxWidth,
+            child: FittedBox(
+              // Cover-fit the video in the outer SizedBox frame.
+              fit: BoxFit.cover,
+              child: SizedBox(
+                // Make video respect its aspect ratio.
+                height: constraints.maxHeight,
+                width: constraints.maxHeight * _controller!.value.aspectRatio,
+                child: VideoPlayer(_controller!),
+              ),
             ),
-          ),
-        );
-      });
+          );
+        },
+      );
     }
     return const Center(child: CircularProgressIndicator());
   }

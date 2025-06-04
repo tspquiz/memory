@@ -25,6 +25,7 @@ class GameScreen extends StatefulWidget {
 
 class _GameScreenState extends State<GameScreen> {
   int _level = firstLevel;
+
   /// Controls if we should show to the user that the game is completed.
   /// This is set a bit delayed after that [_isGameCompleted] becomes true.
   bool _showLevelCompleted = false;
@@ -71,7 +72,9 @@ class _GameScreenState extends State<GameScreen> {
     });
     // Announce to screen readers that the level has loaded
     SemanticsService.announce(
-        'Ny nivå har startat med $nPairs par', TextDirection.ltr);
+      'Ny nivå har startat med $nPairs par',
+      TextDirection.ltr,
+    );
   }
 
   void _clearVideoCache() {
@@ -93,8 +96,9 @@ class _GameScreenState extends State<GameScreen> {
   /// Callback from when a card is tapped to reveal the front
   Future<void> onReveal(int flipIndex) async {
     if (!mounted) return;
-    final flippedCount =
-        _board.where((card) => card.showFrontSide && !card.completed).length;
+    final flippedCount = _board
+        .where((card) => card.showFrontSide && !card.completed)
+        .length;
     if (flippedCount >= 2) {
       setState(() {
         for (var card in _board) {
@@ -110,8 +114,10 @@ class _GameScreenState extends State<GameScreen> {
       return;
     }
     final otherCard = _board
-        .whereIndexed((index, card) =>
-            card.sign.id == flipCard.sign.id && index != flipIndex)
+        .whereIndexed(
+          (index, card) =>
+              card.sign.id == flipCard.sign.id && index != flipIndex,
+        )
         .firstOrNull;
     if (otherCard == null) {
       throw Exception('Could not find pair');
@@ -235,8 +241,10 @@ class _GameScreenState extends State<GameScreen> {
                       children: [
                         const CircularProgressIndicator(),
                         const SizedBox(height: 20),
-                        Text('Väljer ut tecken...',
-                            style: Theme.of(context).textTheme.titleSmall),
+                        Text(
+                          'Väljer ut tecken...',
+                          style: Theme.of(context).textTheme.titleSmall,
+                        ),
                       ],
                     ),
                   ),
@@ -256,7 +264,8 @@ class _GameScreenState extends State<GameScreen> {
               backgroundColor: Colors.blue,
               tooltip: 'Nästa nivå',
               shape: ContinuousRectangleBorder(
-                  borderRadius: BorderRadius.circular(20)),
+                borderRadius: BorderRadius.circular(20),
+              ),
               child: const Icon(Icons.skip_next),
               onPressed: () {
                 _newGame(_level + 1);

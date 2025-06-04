@@ -17,10 +17,12 @@ extension Question on BuildContext {
         title: title,
         content: body,
         actions: answers
-            .map((a) => TextButton(
-                  onPressed: () => Navigator.of(context).pop(a),
-                  child: Text(a.toUpperCase()),
-                ))
+            .map(
+              (a) => TextButton(
+                onPressed: () => Navigator.of(context).pop(a),
+                child: Text(a.toUpperCase()),
+              ),
+            )
             .toList(),
       ),
     );

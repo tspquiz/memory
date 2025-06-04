@@ -8,7 +8,7 @@ class CardState {
   bool hidden;
 
   CardState({required this.sign})
-      : showFrontSide = false,
-        completed = false,
-        hidden = false;
+    : showFrontSide = false,
+      completed = false,
+      hidden = false;
 }
